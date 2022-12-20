@@ -1,0 +1,51 @@
+version: 0.1
+phases:
+  build:
+    commands:
+      - cd ask-referral
+      - zip ask-referral.zip lambda_function.py
+      - aws s3api put-object --bucket referral-connect-deployment-bucket --key ask-referral.zip --body ask-referral.zip --expected-bucket-owner 375935093000
+      - wait
+      - aws lambda update-function-code --function-name ask-referral --s3-bucket referral-connect-deployment-bucket --s3-key ask-referral.zip
+      - cd ../cors-lambda
+      - zip cors-lambda.zip lambda_function.py
+      - aws s3api put-object --bucket referral-connect-deployment-bucket --key cors-lambda.zip --body cors-lambda.zip --expected-bucket-owner 375935093000
+      - wait
+      - aws lambda update-function-code --function-name cors-lambda --s3-bucket referral-connect-deployment-bucket --s3-key cors-lambda.zip
+      - cd ../give-referral
+      - zip give-referral.zip lambda_function.py
+      - aws s3api put-object --bucket referral-connect-deployment-bucket --key give-referral.zip --body give-referral.zip --expected-bucket-owner 375935093000
+      - wait
+      - aws lambda update-function-code --function-name give-referral --s3-bucket referral-connect-deployment-bucket --s3-key give-referral.zip
+      - cd ../job-encodings
+      - zip job-encodings.zip lambda_function.py
+      - aws s3api put-object --bucket referral-connect-deployment-bucket --key job-encodings.zip --body job-encodings.zip --expected-bucket-owner 375935093000
+      - wait
+      - aws lambda update-function-code --function-name job-encodings --s3-bucket referral-connect-deployment-bucket --s3-key job-encodings.zip
+      - cd ../login-lambda
+      - zip login-lambda.zip lambda_function.py
+      - aws s3api put-object --bucket referral-connect-deployment-bucket --key login-lambda.zip --body login-lambda.zip --expected-bucket-owner 375935093000
+      - wait
+      - aws lambda update-function-code --function-name login-lambda --s3-bucket referral-connect-deployment-bucket --s3-key login-lambda.zip
+      - cd ../register-lambda
+      - zip register-lambda.zip lambda_function.py
+      - aws s3api put-object --bucket referral-connect-deployment-bucket --key register-lambda.zip --body register-lambda.zip --expected-bucket-owner 375935093000
+      - wait
+      - aws lambda update-function-code --function-name register-lambda --s3-bucket referral-connect-deployment-bucket --s3-key register-lambda.zip
+      - cd ../my-referral
+      - zip my-referral.zip lambda_function.py
+      - aws s3api put-object --bucket referral-connect-deployment-bucket --key my-referral.zip --body my-referral.zip --expected-bucket-owner 375935093000
+      - wait
+      - aws lambda update-function-code --function-name my-referrals --s3-bucket referral-connect-deployment-bucket --s3-key my-referral.zip
+      - cd ../user-encoding
+      - zip user-encoding.zip lambda_function.py
+      - aws s3api put-object --bucket referral-connect-deployment-bucket --key user-encoding.zip --body user-encoding.zip --expected-bucket-owner 375935093000
+      - wait
+      - aws lambda update-function-code --function-name user-encoding --s3-bucket referral-connect-deployment-bucket --s3-key user-encoding.zip
+      - cd ../user-ranking
+      - zip user-ranking.zip lambda_function.py
+      - aws s3api put-object --bucket referral-connect-deployment-bucket --key user-ranking.zip --body user-ranking.zip --expected-bucket-owner 375935093000
+      - wait
+      - aws lambda update-function-code --function-name user-ranking --s3-bucket referral-connect-deployment-bucket --s3-key user-ranking.zip
+    finally:
+      - echo "Successfully updated lambda functions"
